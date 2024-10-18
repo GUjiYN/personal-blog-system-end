@@ -1,7 +1,7 @@
-package com.nana.personalblogsystem.service;
+package com.nana.personalblogsystem.service.impl;
 
 import com.nana.personalblogsystem.mapper.UserMapper;
-import com.nana.personalblogsystem.model.entity.UserDO;
+import com.nana.personalblogsystem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +18,4 @@ public class UserServiceImpl implements UserService {
         this.userMapper = userMapper;
     }
 
-    @Override
-    public UserDO login(String usernameOrEmail, String password) {
-        return userMapper.getUserByUsernameOrEmail(usernameOrEmail, password);
-    }
 }
