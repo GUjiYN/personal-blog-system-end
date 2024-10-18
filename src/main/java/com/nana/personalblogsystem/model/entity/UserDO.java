@@ -7,8 +7,11 @@ import lombok.experimental.Accessors;
 
 import java.sql.Timestamp;
 
+/**
+ * @author 29464
+ */
 @Data
-@TableName("na_user")
+
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,7 +19,6 @@ public class UserDO {
     /**
      * 用户表主键
      */
-    @TableId(type = IdType.NONE)
     private String uuid;
     /**
      * 用户名
