@@ -3,6 +3,7 @@ package com.nana.personalblogsystem.controller;
 import com.nana.personalblogsystem.model.dto.AuthUserDTO;
 import com.nana.personalblogsystem.model.dto.UserDTO;
 import com.nana.personalblogsystem.model.entity.UserDO;
+import com.nana.personalblogsystem.model.vo.AuthLoginVO;
 import com.nana.personalblogsystem.model.vo.AuthRegisterVO;
 import com.nana.personalblogsystem.service.AuthService;
 import com.nana.personalblogsystem.service.TokenService;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
  * @version v1.0.0
  * @since v1.0.0
  */
+@CrossOrigin(origins = "http://localhost:5173", allowedHeaders = "*", allowCredentials = "true")
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
@@ -40,7 +42,8 @@ public class AuthController {
      * @return 响应
      */
     @PostMapping("/register")
-    public ResponseEntity<BaseResponse<Void>> register(@RequestBody @Validated AuthRegisterVO authRegisterVO) {
+    public ResponseEntity<BaseResponse<Void>> register(
+            @RequestBody @Validated AuthRegisterVO authRegisterVO) {
         authService.register(authRegisterVO.getUsername(), authRegisterVO.getEmail(), authRegisterVO.getPassword());
         return ResultUtil.success("注册成功");
     }
@@ -50,18 +53,16 @@ public class AuthController {
      * <p>
      * 用于用户登录。
      *
-     * @param user 用户名或邮箱
-     * @param password        密码
+     * @param authLoginVO  登录视图对象
      * @param request         请求
      * @return 响应
      */
     @PostMapping("/login")
     public ResponseEntity<BaseResponse<AuthUserDTO>> login(
-            @RequestParam String user,
-            @RequestParam String password,
+            @RequestBody @Validated AuthLoginVO authLoginVO,
             HttpServletRequest request
     ) {
-        UserDO getUser = authService.login(user, password, request);
+        UserDO getUser = authService.login(authLoginVO.getUser(), authLoginVO.getPassword(), request);
         String getToken = tokenService.generateToken(getUser.getUuid());
         UserDTO userDTO = new UserDTO();
         BeanUtils.copyProperties(getUser, userDTO);
