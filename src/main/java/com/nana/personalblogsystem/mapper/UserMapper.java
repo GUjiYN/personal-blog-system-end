@@ -10,6 +10,9 @@ import org.apache.ibatis.annotations.Select;
  */
 @Mapper
 public interface UserMapper {
+    @Select("SELECT * FROM na_user WHERE uuid = #{uuid}")
+    UserDO getUserByUuid(String uuid);
+
     @Select("SELECT * FROM na_user WHERE email = #{email}")
     UserDO getUserByEmail(String email);
 

@@ -6,9 +6,10 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.sql.Timestamp;
-
 /**
- * @author 29464
+ * @version v1.0.0
+ * @since v1.0.0
+ * @author nana
  */
 @Data
 @Accessors(chain = true)

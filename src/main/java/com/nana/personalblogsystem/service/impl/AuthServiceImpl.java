@@ -47,6 +47,7 @@ public class AuthServiceImpl implements AuthService {
                 .setPassword(PasswordUtil.encrypt(password));
         userMapper.createUser(newUser);
     }
+
     @Override
     public UserDO login(String user, String password, HttpServletRequest request) {
         UserDO getUser;

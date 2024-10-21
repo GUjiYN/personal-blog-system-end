@@ -27,12 +27,11 @@ import lombok.Getter;
  * 授权登录值对象
  * <p>
  * 该类用于定义授权登录值对象;
- *
- * @author 29464
- * @since v1.0.0
  * @version v1.0.0
- *
+ * @since v1.0.0
+ * @author nana
  */
+
 @Getter
 @SuppressWarnings("unused")
 public class AuthLoginVO {

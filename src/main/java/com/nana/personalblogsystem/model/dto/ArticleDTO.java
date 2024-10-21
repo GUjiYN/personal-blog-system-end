@@ -16,19 +16,27 @@ import java.sql.Timestamp;
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDTO {
+public class ArticleDTO {
     /**
-     * 用户表主键
+     * 文章表主键
      */
-    private String uuid;
+    private String aid;
     /**
-     * 用户名
+     *作者id
      */
-    private String username;
+    private String authid;
     /**
-     * 用户邮箱
+     * 标题
      */
-    private String email;
+    private String title;
+    /**
+     * 标签
+     */
+    private String tags;
+    /**
+     * 内容
+     */
+    private String desc;
     /**
      * 创建时间
      */
