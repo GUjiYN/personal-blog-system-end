@@ -6,6 +6,7 @@ import com.nana.personalblogsystem.service.ArticleService;
 import com.xlf.utility.BaseResponse;
 import com.xlf.utility.ResultUtil;
 import lombok.RequiredArgsConstructor;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -52,5 +53,18 @@ public class ArticleController {
     ){
         articleService.updateArticle(articleVO, aid);
         return ResultUtil.success("更新成功");
+    }
+
+    /**
+     * 删除文章
+     * <p>
+     * 用于删除文章
+     */
+    @DeleteMapping("/delete")
+    public ResponseEntity<BaseResponse<Void>> deleteArticle(
+            @RequestParam("aid") String aid
+    ){
+
+        return ResultUtil.success("删除成功");
     }
 }

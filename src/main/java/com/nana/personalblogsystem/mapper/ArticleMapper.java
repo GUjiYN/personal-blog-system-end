@@ -2,10 +2,7 @@ package com.nana.personalblogsystem.mapper;
 
 import com.nana.personalblogsystem.model.entity.ArticleDO;
 import com.nana.personalblogsystem.model.entity.UserDO;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 /**
  * 文章映射器
@@ -17,6 +14,8 @@ import org.apache.ibatis.annotations.Update;
 @Mapper
 public interface ArticleMapper {
 
+    @Select("SELECT * FROM na_article WHERE aid = #{aid}")
+    ArticleDO getArticleByAid(String aid);
 
     @Select("SELECT * FROM na_article WHERE title = #{title} OR desc = #{desc}")
     ArticleDO articleExist(String title, String desc);
@@ -26,4 +25,7 @@ public interface ArticleMapper {
 
     @Update("UPDATE na_article SET title = #{title}, desc = #{desc}, tags = #{tags} WHERE aid = #{aid}")
     void updateArticle(ArticleDO articleDO);
+
+    @Delete("DELETE FROM na_article WHERE aid = #{aid}")
+    void deleteArticle(String aid);
 }

@@ -55,4 +55,13 @@ public class ArticleServiceImpl implements ArticleService {
         BeanUtils.copyProperties(article, getArticle);
         articleMapper.updateArticle(getArticle);
     }
+
+    @Override
+    public void deleteArticle(String aid) {
+        ArticleDO getArticle = articleMapper.getArticleByAid(aid);
+        if (getArticle == null) {
+            throw new BusinessException("文章不存在", ErrorCode.EXISTED);
+        }
+        articleMapper.deleteArticle(aid);
+    }
 }
