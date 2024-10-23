@@ -38,6 +38,10 @@ public class ArticleDTO {
      */
     private String desc;
     /**
+     *图片
+     */
+    private String image;
+    /**
      * 创建时间
      */
     private Timestamp createdAt;

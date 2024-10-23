@@ -6,7 +6,9 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
 /**
- * @author 29464
+ * @author nana
+ * @version v1.0.0
+ * @since v1.0.0
  */
 @Mapper
 public interface UserMapper {

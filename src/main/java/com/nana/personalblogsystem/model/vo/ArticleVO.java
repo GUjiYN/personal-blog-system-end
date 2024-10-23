@@ -40,4 +40,5 @@ public class ArticleVO {
     @NotBlank(message = "文章标签不能为空")
     public String tags;
 
+    public String image;
 }

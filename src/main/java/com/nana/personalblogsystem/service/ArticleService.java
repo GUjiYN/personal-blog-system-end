@@ -11,7 +11,7 @@ import com.nana.personalblogsystem.model.vo.ArticleVO;
 
 public interface ArticleService {
 
-    void createArticle(String title, String desc, String tags);
+    void createArticle(String title, String desc, String tags, String image);
 
     void updateArticle(ArticleVO article, String aid);
 

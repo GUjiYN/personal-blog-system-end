@@ -37,7 +37,7 @@ public class ArticleController {
             @RequestBody @Validated ArticleVO articleVO
 
     ) {
-        articleService.createArticle(articleVO.getTitle(), articleVO.getDesc(), articleVO.getTags());
+        articleService.createArticle(articleVO.getTitle(), articleVO.getDesc(), articleVO.getTags(),articleVO.getImage());
         return ResultUtil.success("创建成功");
     }
 

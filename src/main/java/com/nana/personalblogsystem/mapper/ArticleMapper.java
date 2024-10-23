@@ -20,10 +20,10 @@ public interface ArticleMapper {
     @Select("SELECT * FROM na_article WHERE title = #{title} OR desc = #{desc}")
     ArticleDO articleExist(String title, String desc);
 
-    @Insert("INSERT INTO na_article (aid, authid, title, tags, [desc]) VALUES (#{aid}, #{authid}, #{title}, #{tags}, #{desc})")
+    @Insert("INSERT INTO na_article (aid, authid, title, tags, [desc], image) VALUES (#{aid}, #{authid}, #{title}, #{tags}, #{desc}, #{image})")
     void createArticle(ArticleDO articleDO);
 
-    @Update("UPDATE na_article SET title = #{title}, desc = #{desc}, tags = #{tags} WHERE aid = #{aid}")
+    @Update("UPDATE na_article SET title = #{title}, desc = #{desc}, tags = #{tags}, image = #{image} WHERE aid = #{aid}")
     void updateArticle(ArticleDO articleDO);
 
     @Delete("DELETE FROM na_article WHERE aid = #{aid}")

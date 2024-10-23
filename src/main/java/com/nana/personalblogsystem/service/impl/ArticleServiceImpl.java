@@ -16,8 +16,8 @@ import org.springframework.stereotype.Service;
  * 文章逻辑，包含文章相关逻辑
  *
  * @author nana
- *  * @version v1.0.0
- *  * @since v1.0.0
+ * @version v1.0.0
+ * @since v1.0.0
  */
 @Service
 public class ArticleServiceImpl implements ArticleService {
@@ -29,7 +29,7 @@ public class ArticleServiceImpl implements ArticleService {
    }
 
     @Override
-    public void createArticle(String title, String desc, String tags) {
+    public void createArticle(String title, String desc, String tags, String image) {
         // 检查文章是否已存在
         ArticleDO getArticle = articleMapper.articleExist(title, desc);
         if (getArticle != null) {

@@ -22,8 +22,9 @@ public class ArticleDO {
     private String aid;
     private String authid;
     private String title;
-    private String tags;
     private String desc;
+    private String tags;
+    private String image;
     private Timestamp createdAt;
     private Timestamp updatedAt;
 }
