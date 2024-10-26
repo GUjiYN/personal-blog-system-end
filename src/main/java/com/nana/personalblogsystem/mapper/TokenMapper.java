@@ -4,6 +4,7 @@ import com.nana.personalblogsystem.model.entity.TokenDO;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 /**
  * Token映射器
@@ -21,4 +22,7 @@ public interface TokenMapper {
 
     @Delete("DELETE FROM na_token WHERE token_uuid = #{token}")
     void deleteToken(String token);
+
+    @Select("SELECT * from na_token WHERE token_uuid = #{token}")
+    TokenDO tokenExist(String token);
 }

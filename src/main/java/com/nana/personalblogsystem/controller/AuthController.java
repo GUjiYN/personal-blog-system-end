@@ -7,12 +7,15 @@ import com.nana.personalblogsystem.model.vo.AuthLoginVO;
 import com.nana.personalblogsystem.model.vo.AuthRegisterVO;
 import com.nana.personalblogsystem.service.AuthService;
 import com.nana.personalblogsystem.service.TokenService;
+import com.nana.personalblogsystem.service.UserService;
+import com.nana.personalblogsystem.service.impl.UserServiceImpl;
 import com.xlf.utility.BaseResponse;
 import com.xlf.utility.ResultUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,6 +35,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
     private final AuthService authService;
     private final TokenService tokenService;
+    private final UserService userService;
 
     /**
      * 注册
@@ -41,11 +45,20 @@ public class AuthController {
      * @param authRegisterVO 注册视图对象
      * @return 响应
      */
+
     @PostMapping("/register")
-    public ResponseEntity<BaseResponse<Void>> register(
-            @RequestBody @Validated AuthRegisterVO authRegisterVO) {
-        authService.register(authRegisterVO.getUsername(), authRegisterVO.getEmail(), authRegisterVO.getPassword());
-        return ResultUtil.success("注册成功");
+    @Transactional
+    public  ResponseEntity<BaseResponse<AuthUserDTO>>  register(
+            @RequestBody @Validated AuthRegisterVO authRegisterVO,
+            HttpServletRequest request
+    ) {
+        String getUserUuid = authService.register(authRegisterVO);
+        UserDTO getUserDTO = userService.getUserByUuid(getUserUuid);
+        String getToken = tokenService.generateToken(getUserUuid, 12L, request);
+        AuthUserDTO authUserDTO = new AuthUserDTO()
+                .setUser(getUserDTO)
+                .setToken(getToken);
+        return ResultUtil.success("注册成功",authUserDTO);
     }
 
     /**
@@ -63,7 +76,7 @@ public class AuthController {
             HttpServletRequest request
     ) {
         UserDO getUser = authService.login(authLoginVO.getUser(), authLoginVO.getPassword(), request);
-        String getToken = tokenService.generateToken(getUser.getUuid());
+        String getToken = tokenService.generateToken(getUser.getUuid(), 12L, request);
         UserDTO userDTO = new UserDTO();
         BeanUtils.copyProperties(getUser, userDTO);
         AuthUserDTO authUserDTO = new AuthUserDTO();

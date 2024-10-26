@@ -4,6 +4,7 @@ import com.nana.personalblogsystem.mapper.TokenMapper;
 import com.nana.personalblogsystem.model.entity.TokenDO;
 import com.nana.personalblogsystem.service.TokenService;
 import com.xlf.utility.util.UuidUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +26,7 @@ public class TokenServiceImpl implements TokenService {
     private final TokenMapper tokenMapper;
 
     @Override
-    public String generateToken(String userUuid) {
+    public String generateToken(String userUuid, Long expiredHourTime, HttpServletRequest request) {
         String newTokenUuid = UuidUtil.generateStringUuid();
         TokenDO newToken = new TokenDO();
         newToken

@@ -1,6 +1,7 @@
 package com.nana.personalblogsystem.service;
 
 import com.nana.personalblogsystem.model.entity.TokenDO;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * Token服务
@@ -21,7 +22,7 @@ public interface TokenService {
      * @param userUuid 用户UUID
      * @return Token
      */
-    String generateToken(String userUuid);
+    String generateToken(String userUuid, Long expiredHourTime, HttpServletRequest request);
 
     /**
      * 验证Token

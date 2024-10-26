@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 用户登录
+ * 用户控制器
  * @version v1.0.0
  * @since v1.0.0
  * @author nana

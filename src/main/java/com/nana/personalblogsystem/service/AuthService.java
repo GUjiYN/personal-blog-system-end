@@ -1,6 +1,7 @@
 package com.nana.personalblogsystem.service;
 
 import com.nana.personalblogsystem.model.entity.UserDO;
+import com.nana.personalblogsystem.model.vo.AuthRegisterVO;
 import jakarta.servlet.http.HttpServletRequest;
 
 /**
@@ -15,15 +16,15 @@ import jakarta.servlet.http.HttpServletRequest;
 public interface AuthService {
 
     /**
-     * 注册
+     * 注册用户
      * <p>
-     * 用于用户注册。
+     * 该方法用于注册用户；注册用户时，需要提供 {@code 用户名}、{@code 邮箱}、{@code 密码}；
+     * 注册成功后，返回用户信息。
      *
-     * @param username 用户名
-     * @param email 邮箱
-     * @param password 密码
+     * @param authRegisterVO 授权注册值对象
+     * @return 用户UUID
      */
-    void register(String username, String email, String password);
+    String register(AuthRegisterVO authRegisterVO);
 
     /**
      * 登录

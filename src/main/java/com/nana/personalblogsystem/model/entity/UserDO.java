@@ -6,11 +6,18 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.sql.Timestamp;
+
+
 /**
+ * User 数据对象
+ * <p>
+ * 用于 User 数据的存储。
+ *
  * @version v1.0.0
  * @since v1.0.0
  * @author nana
  */
+
 @Data
 @Accessors(chain = true)
 @NoArgsConstructor

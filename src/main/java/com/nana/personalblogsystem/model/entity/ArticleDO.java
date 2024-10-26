@@ -8,6 +8,10 @@ import lombok.experimental.Accessors;
 import java.security.Timestamp;
 
 /**
+ * Article 数据对象
+ * <p>
+ * 用于 Article 数据的存储。
+ *
  * @version v1.0.0
  * @since v1.0.0
  * @author nana

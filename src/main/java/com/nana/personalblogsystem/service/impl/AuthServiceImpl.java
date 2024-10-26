@@ -2,6 +2,7 @@ package com.nana.personalblogsystem.service.impl;
 
 import com.nana.personalblogsystem.mapper.UserMapper;
 import com.nana.personalblogsystem.model.entity.UserDO;
+import com.nana.personalblogsystem.model.vo.AuthRegisterVO;
 import com.nana.personalblogsystem.service.AuthService;
 import com.xlf.utility.ErrorCode;
 import com.xlf.utility.exception.BusinessException;
@@ -9,6 +10,7 @@ import com.xlf.utility.exception.library.UserAuthenticationException;
 import com.xlf.utility.util.PasswordUtil;
 import com.xlf.utility.util.UuidUtil;
 import jakarta.servlet.http.HttpServletRequest;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
 import java.util.regex.Pattern;
@@ -32,20 +34,22 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public void register(String username, String email, String password) {
+    public String register(@NotNull AuthRegisterVO authRegisterVO) {
         // 检查用户是否已存在
-        UserDO getUser = userMapper.userExist(username, email);
+        UserDO getUser = userMapper.userExist(authRegisterVO.getUsername(), authRegisterVO.getPassword());
         if (getUser != null) {
             throw new BusinessException("用户已存在", ErrorCode.EXISTED);
         }
         // 注册用户
+        String newUserUuid = UuidUtil.generateStringUuid();
         UserDO newUser = new UserDO();
         newUser
-                .setUuid(UuidUtil.generateStringUuid())
-                .setUsername(username)
-                .setEmail(email)
-                .setPassword(PasswordUtil.encrypt(password));
+                .setUuid(newUserUuid)
+                .setUsername(authRegisterVO.getUsername())
+                .setEmail(authRegisterVO.getEmail())
+                .setPassword(PasswordUtil.encrypt(authRegisterVO.getPassword()));
         userMapper.createUser(newUser);
+        return newUserUuid;
     }
 
     @Override
