@@ -1,6 +1,8 @@
 package com.nana.personalblogsystem.service.impl;
 
+import com.nana.personalblogsystem.mapper.InfoMapper;
 import com.nana.personalblogsystem.mapper.UserMapper;
+import com.nana.personalblogsystem.model.entity.InfoDO;
 import com.nana.personalblogsystem.model.entity.UserDO;
 import com.nana.personalblogsystem.model.vo.AuthRegisterVO;
 import com.nana.personalblogsystem.service.AuthService;
@@ -10,6 +12,7 @@ import com.xlf.utility.exception.library.UserAuthenticationException;
 import com.xlf.utility.util.PasswordUtil;
 import com.xlf.utility.util.UuidUtil;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
@@ -25,13 +28,12 @@ import java.util.regex.Pattern;
  * @since v1.0.0
  */
 @Service
+@RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
     private final UserMapper userMapper;
+    private final InfoMapper infoMapper;
 
-    public AuthServiceImpl(UserMapper userMapper) {
-        this.userMapper = userMapper;
-    }
 
     @Override
     public String register(@NotNull AuthRegisterVO authRegisterVO) {
@@ -42,6 +44,11 @@ public class AuthServiceImpl implements AuthService {
         }
         // 注册用户
         String newUserUuid = UuidUtil.generateStringUuid();
+        InfoDO newInfo = new InfoDO();
+        newInfo
+                .setIkey(newUserUuid)
+                .setIvalue(authRegisterVO.getUsername());
+        infoMapper.insertInfo(newInfo);
         UserDO newUser = new UserDO();
         newUser
                 .setUuid(newUserUuid)

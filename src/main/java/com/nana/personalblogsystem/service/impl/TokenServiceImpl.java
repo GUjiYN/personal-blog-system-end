@@ -3,6 +3,8 @@ package com.nana.personalblogsystem.service.impl;
 import com.nana.personalblogsystem.mapper.TokenMapper;
 import com.nana.personalblogsystem.model.entity.TokenDO;
 import com.nana.personalblogsystem.service.TokenService;
+import com.xlf.utility.ErrorCode;
+import com.xlf.utility.exception.BusinessException;
 import com.xlf.utility.util.UuidUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -47,11 +49,20 @@ public class TokenServiceImpl implements TokenService {
          *      a. 如果过期，删除 Token
          *      b. 如果未过期，返回 TokenDO
          */
+
+        TokenDO getToken = tokenMapper.tokenExist(token);
+        if (getToken == null) {
+            throw new BusinessException("token不存在", ErrorCode.EXISTED);
+        }
+        if (getToken.getExpiredAt().after(new Timestamp(System.currentTimeMillis()))) {
+            deleteToken(token);
+        }
         return new TokenDO();
     }
 
     @Override
     public void deleteToken(String token) {
+        
         tokenMapper.deleteToken(token);
     }
 }

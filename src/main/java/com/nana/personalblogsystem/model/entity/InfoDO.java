@@ -22,8 +22,8 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @AllArgsConstructor
 public class InfoDO {
-    private Integer inid;
-    private String key;
-    private String value;
+    private int inid;
+    private String ikey;
+    private String ivalue;
     private String created_at;
 }

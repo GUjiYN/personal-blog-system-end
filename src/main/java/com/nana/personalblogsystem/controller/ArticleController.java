@@ -1,10 +1,13 @@
 package com.nana.personalblogsystem.controller;
 
+import com.nana.personalblogsystem.model.entity.TokenDO;
 import com.nana.personalblogsystem.model.vo.ArticleVO;
 import com.nana.personalblogsystem.model.vo.AuthRegisterVO;
 import com.nana.personalblogsystem.service.ArticleService;
+import com.nana.personalblogsystem.service.TokenService;
 import com.xlf.utility.BaseResponse;
 import com.xlf.utility.ResultUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.annotations.Delete;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +28,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/article")
 public class ArticleController {
     private final ArticleService articleService;
-
+    private final TokenService tokenService;
     /**
      * 创建文章
      * <p>
@@ -34,10 +37,15 @@ public class ArticleController {
      */
     @PostMapping("/create")
     public ResponseEntity<BaseResponse<Void>> createArticle(
-            @RequestBody @Validated ArticleVO articleVO
-
+            @RequestBody @Validated ArticleVO articleVO,
+            HttpServletRequest request
     ) {
-        articleService.createArticle(articleVO.getTitle(), articleVO.getDesc(), articleVO.getTags(),articleVO.getImage());
+        String token = request.getHeader("token");
+        TokenDO tokenDO = tokenService.verifyToken(token);
+        if (tokenDO == null) {
+
+        }
+        articleService.createArticle(articleVO,request);
         return ResultUtil.success("创建成功");
     }
 

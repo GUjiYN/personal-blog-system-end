@@ -2,11 +2,14 @@ package com.nana.personalblogsystem.service.impl;
 
 import com.nana.personalblogsystem.mapper.ArticleMapper;
 import com.nana.personalblogsystem.model.entity.ArticleDO;
+import com.nana.personalblogsystem.model.entity.TokenDO;
 import com.nana.personalblogsystem.model.vo.ArticleVO;
 import com.nana.personalblogsystem.service.ArticleService;
+import com.nana.personalblogsystem.service.TokenService;
 import com.xlf.utility.ErrorCode;
 import com.xlf.utility.exception.BusinessException;
 import com.xlf.utility.util.UuidUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -25,13 +28,14 @@ public class ArticleServiceImpl implements ArticleService {
    private final ArticleMapper articleMapper;
 
    public ArticleServiceImpl(ArticleMapper articleMapper) {
+
        this.articleMapper = articleMapper;
    }
 
     @Override
-    public void createArticle(String title, String desc, String tags, String image) {
+    public void createArticle(ArticleVO articleVO, HttpServletRequest request) {
         // 检查文章是否已存在
-        ArticleDO getArticle = articleMapper.articleExist(title, desc);
+        ArticleDO getArticle = articleMapper.articleExist(articleVO.getTitle(), articleVO.getDesc());
         if (getArticle != null) {
             throw new BusinessException("文章名已存在", ErrorCode.EXISTED);
         }
@@ -39,9 +43,9 @@ public class ArticleServiceImpl implements ArticleService {
         ArticleDO newArticle = new ArticleDO();
         newArticle
                 .setAid(UuidUtil.generateStringUuid())
-                .setTitle(title)
-                .setTags(tags)
-                .setDesc(desc);
+                .setTitle(articleVO.getTitle())
+                .setTags(articleVO.getTags())
+                .setDesc(articleVO.getDesc());
         articleMapper.createArticle(newArticle);
     }
 
