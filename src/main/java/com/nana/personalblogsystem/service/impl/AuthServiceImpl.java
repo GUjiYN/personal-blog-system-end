@@ -32,7 +32,6 @@ import java.util.regex.Pattern;
 public class AuthServiceImpl implements AuthService {
 
     private final UserMapper userMapper;
-    private final InfoMapper infoMapper;
 
 
     @Override
@@ -44,11 +43,6 @@ public class AuthServiceImpl implements AuthService {
         }
         // 注册用户
         String newUserUuid = UuidUtil.generateStringUuid();
-        InfoDO newInfo = new InfoDO();
-        newInfo
-                .setIkey(newUserUuid)
-                .setIvalue(authRegisterVO.getUsername());
-        infoMapper.insertInfo(newInfo);
         UserDO newUser = new UserDO();
         newUser
                 .setUuid(newUserUuid)
