@@ -3,6 +3,9 @@ package com.nana.personalblogsystem.config.init;
 
 import com.google.gson.Gson;
 import com.nana.personalblogsystem.mapper.InfoMapper;
+import com.nana.personalblogsystem.mapper.UserMapper;
+import com.nana.personalblogsystem.model.entity.UserDO;
+import com.xlf.utility.util.PasswordUtil;
 import com.xlf.utility.util.UuidUtil;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +22,7 @@ import java.util.ArrayList;
 @RequiredArgsConstructor
 public class initialize {
     private final InfoMapper infoMapper;
+    private final UserMapper userMapper;
     private PrepareAlgorithm prepare;
 
     /**
@@ -80,7 +84,13 @@ public class initialize {
         log.info("[INIT] 检查默认信息表信息...");
         if (prepare.initGetGlobalVariable("system_super_admin_uuid") == null) {
             String infoValueUuid = UuidUtil.generateUuidNoDash();
-            prepare.checkInfoTableFields("system_default_class_time_uuid", infoValueUuid);
+            UserDO userDO = new UserDO();
+            userDO.setUuid(infoValueUuid);
+            userDO.setEmail("admin@admin.com");
+            userDO.setPassword(PasswordUtil.encrypt("123456"));
+            userDO.setUsername("admin");
+            userMapper.createUser(userDO);
+            prepare.checkInfoTableFields("system_super_admin_uuid", infoValueUuid);
             SystemConstant.superAdminUUID = infoValueUuid;
         } else {
             SystemConstant.superAdminUUID = prepare.initGetGlobalVariable("system_super_admin_uuid");

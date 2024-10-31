@@ -12,18 +12,20 @@ import org.apache.ibatis.annotations.Select;
  */
 @Mapper
 public interface UserMapper {
-    @Select("SELECT * FROM na_user WHERE uuid = #{uuid}")
-    UserDO getUserByUuid(String uuid);
-
     @Select("SELECT * FROM na_user WHERE email = #{email}")
     UserDO getUserByEmail(String email);
 
+    @Select("SELECT * FROM na_user WHERE uuid = #{uuid}")
+    UserDO getUserByUuid(String uuid);
+    
     @Select("SELECT * FROM na_user WHERE username = #{username}")
     UserDO getUserByUsername(String username);
 
     @Select("SELECT * FROM na_user WHERE username = #{username} OR email = #{email}")
-    UserDO userExist(String username, String email);
+    UserDO selectUser(String username, String email);
 
     @Insert("INSERT INTO na_user (uuid, username, email, password) VALUES (#{uuid}, #{username}, #{email}, #{password})")
     void createUser(UserDO userDO);
+
+
 }

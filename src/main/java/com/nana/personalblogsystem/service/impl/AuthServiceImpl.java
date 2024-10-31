@@ -37,7 +37,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public String register(@NotNull AuthRegisterVO authRegisterVO) {
         // 检查用户是否已存在
-        UserDO getUser = userMapper.userExist(authRegisterVO.getUsername(), authRegisterVO.getPassword());
+        UserDO getUser = userMapper.selectUser(authRegisterVO.getUsername(), authRegisterVO.getPassword());
         if (getUser != null) {
             throw new BusinessException("用户已存在", ErrorCode.EXISTED);
         }

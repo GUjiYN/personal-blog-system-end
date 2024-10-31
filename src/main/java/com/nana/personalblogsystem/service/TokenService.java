@@ -1,5 +1,6 @@
 package com.nana.personalblogsystem.service;
 
+import com.nana.personalblogsystem.model.dto.TokenDTO;
 import com.nana.personalblogsystem.model.entity.TokenDO;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -42,4 +43,13 @@ public interface TokenService {
      * @param token Token
      */
     void deleteToken(String token);
+
+    /**
+     * 查询Token
+     * <p>
+     *  用于查询token表中的数据
+     *
+     *
+     */
+    TokenDTO selectToken(String token);
 }

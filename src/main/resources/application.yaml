@@ -4,5 +4,6 @@ spring:
     url: jdbc:mysql://localhost:3306/personal_blog
     username: root
     password: CWily031118
-
-
+logging:
+  level:
+    com.nana.personalblogsystem: debug

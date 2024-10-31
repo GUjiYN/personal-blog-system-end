@@ -10,10 +10,7 @@ package com.nana.personalblogsystem.model.vo;/*
 
 
 
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 
 import java.util.List;
@@ -30,6 +27,7 @@ import java.util.List;
 @Getter
 @SuppressWarnings("unused")
 public class ArticleVO {
+
     @NotBlank(message = "文章标题不能为空")
     @Pattern(regexp = "^[a-zA-Z0-9-_]{4,48}$", message = "创建名字格式不正确")
     public String title;
@@ -37,8 +35,8 @@ public class ArticleVO {
     @NotBlank(message = "文章内容不能为空")
     public String desc;
 
-    @NotBlank(message = "文章标签不能为空")
-    public String tags;
+    @NotNull(message = "文章标签不能为空")
+    public List<String> tags;
 
     public String image;
 }

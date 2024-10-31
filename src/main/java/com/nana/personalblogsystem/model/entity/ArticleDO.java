@@ -5,7 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
+
 
 /**
  * Article 数据对象
@@ -26,7 +27,7 @@ public class ArticleDO {
     private String aid;
     private String authid;
     private String title;
-    private String desc;
+    private String description;
     private String tags;
     private String image;
     private Timestamp createdAt;

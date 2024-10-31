@@ -1,13 +1,15 @@
 package com.nana.personalblogsystem.service.impl;
 
 import com.nana.personalblogsystem.mapper.TokenMapper;
+import com.nana.personalblogsystem.model.dto.TokenDTO;
 import com.nana.personalblogsystem.model.entity.TokenDO;
-import com.nana.personalblogsystem.service.TokenService;
 import com.xlf.utility.ErrorCode;
 import com.xlf.utility.exception.BusinessException;
 import com.xlf.utility.util.UuidUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -21,9 +23,10 @@ import java.sql.Timestamp;
  * @since v1.0.0
  * @author nana
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
-public class TokenServiceImpl implements TokenService {
+public class TokenService implements com.nana.personalblogsystem.service.TokenService {
 
     private final TokenMapper tokenMapper;
 
@@ -39,6 +42,22 @@ public class TokenServiceImpl implements TokenService {
         return newTokenUuid;
     }
 
+
+    @Override
+    public TokenDTO selectToken(String token) {
+        log.debug("token: {}",  token);
+        // 检查token是否已存在
+        TokenDO tokenDO = tokenMapper.selectToken(token);
+        if (tokenDO == null) {
+            throw new BusinessException("token不存在", ErrorCode.NOT_EXIST);
+        }
+        TokenDTO tokenDTO = new TokenDTO();
+        BeanUtils.copyProperties(tokenDO, tokenDTO);
+
+        return tokenDTO;
+    }
+
+
     @Override
     public TokenDO verifyToken(String token) {
         /*
@@ -50,7 +69,7 @@ public class TokenServiceImpl implements TokenService {
          *      b. 如果未过期，返回 TokenDO
          */
 
-        TokenDO getToken = tokenMapper.tokenExist(token);
+        TokenDO getToken = tokenMapper.selectToken(token);
         if (getToken == null) {
             throw new BusinessException("token不存在", ErrorCode.EXISTED);
         }

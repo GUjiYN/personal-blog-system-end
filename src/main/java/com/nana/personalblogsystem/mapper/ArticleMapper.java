@@ -1,7 +1,6 @@
 package com.nana.personalblogsystem.mapper;
 
 import com.nana.personalblogsystem.model.entity.ArticleDO;
-import com.nana.personalblogsystem.model.entity.UserDO;
 import org.apache.ibatis.annotations.*;
 
 /**
@@ -17,13 +16,16 @@ public interface ArticleMapper {
     @Select("SELECT * FROM na_article WHERE aid = #{aid}")
     ArticleDO getArticleByAid(String aid);
 
-    @Select("SELECT * FROM na_article WHERE title = #{title} OR desc = #{desc}")
-    ArticleDO articleExist(String title, String desc);
+    @Select("SELECT * FROM na_article WHERE title = #{title}")
+    ArticleDO articleRepeat(String title, String desc);
+    
+    @Select("SELECT * FROM na_article WHERE aid = #{aid}")
+    ArticleDO articleExist(String aid);
 
-    @Insert("INSERT INTO na_article (aid, authid, title, tags, [desc], image) VALUES (#{aid}, #{authid}, #{title}, #{tags}, #{desc}, #{image})")
+    @Insert("INSERT INTO na_article (aid, authid, title, tags, description, image) VALUES (#{aid}, #{authid}, #{title}, #{tags}, #{description}, #{image})")
     void createArticle(ArticleDO articleDO);
 
-    @Update("UPDATE na_article SET title = #{title}, desc = #{desc}, tags = #{tags}, image = #{image} WHERE aid = #{aid}")
+    @Update("UPDATE na_article SET title = #{title}, description = #{description}, tags = #{tags}, image = #{image} WHERE aid = #{aid}")
     void updateArticle(ArticleDO articleDO);
 
     @Delete("DELETE FROM na_article WHERE aid = #{aid}")

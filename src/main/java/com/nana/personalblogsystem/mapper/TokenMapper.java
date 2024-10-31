@@ -17,12 +17,12 @@ import org.apache.ibatis.annotations.Select;
  */
 @Mapper
 public interface TokenMapper {
-    @Insert("INSERT INTO na_token (token_uuid, user_uuid, expired_at) VALUES (#{tokenUuid}, #{userUuid}, #{expiredAt})")
-    void insertToken(TokenDO token);
+    @Select("SELECT * from na_token WHERE token_uuid = #{token}")
+    TokenDO selectToken(String token);
 
     @Delete("DELETE FROM na_token WHERE token_uuid = #{token}")
     void deleteToken(String token);
 
-    @Select("SELECT * from na_token WHERE token_uuid = #{token}")
-    TokenDO tokenExist(String token);
+    @Insert("INSERT INTO na_token (token_uuid, user_uuid, expired_at) VALUES (#{tokenUuid}, #{userUuid}, #{expiredAt})")
+    void insertToken(TokenDO token);
 }

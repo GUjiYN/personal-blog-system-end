@@ -38,10 +38,10 @@ public class PrepareAlgorithm {
      * 该方法用于获取全局变量；当全局变量不存在时，初始化全局变量。
      */
     public String initGetGlobalVariable(String ikey){
-        InfoDO infoDO = infoMapper.selectInfoByKey(ikey);
-        if(infoDO == null){
-            return null;
-        }
-        return infoDO.getIvalue();
+            InfoDO infoDO = infoMapper.selectInfoByKey(ikey);
+            if(infoDO == null){
+                return null;
+            }
+            return infoDO.getIvalue();
     }
 }
