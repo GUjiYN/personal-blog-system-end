@@ -38,7 +38,7 @@ public class ArticleServiceImpl implements ArticleService {
         // 检查文章是否已存在
         ArticleDO getArticle = articleMapper.articleRepeat(articleVO.getTitle(), articleVO.getDesc());
         if (getArticle != null) {
-            throw new BusinessException("文章名已存在", ErrorCode.EXISTED);
+            throw new BusinessException("文章已存在", ErrorCode.EXISTED);
         }
         String token = request.getHeader("Authorization");
         TokenDTO tokenDTO = tokenService.selectToken(token);
@@ -70,7 +70,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public void deleteArticle(String aid) {
-        ArticleDO getArticle = articleMapper.getArticleByAid(aid);
+        ArticleDO getArticle = articleMapper.articleExist(aid);
         if (getArticle == null) {
             throw new BusinessException("文章不存在", ErrorCode.EXISTED);
         }

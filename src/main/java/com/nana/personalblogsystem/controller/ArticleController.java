@@ -98,9 +98,19 @@ public class ArticleController {
      */
     @DeleteMapping("/delete")
     public ResponseEntity<BaseResponse<Void>> deleteArticle(
-            @RequestParam("aid") String aid
+            @RequestParam("aid") String aid,
+            HttpServletRequest request
     ){
-
-        return ResultUtil.success("删除成功");
+        if(aid.isBlank()){
+            throw new BusinessException("文章id不能为空", ErrorCode.BODY_ERROR);
+        }
+        String token = request.getHeader("Authorization");
+        TokenDTO tokenDTO = tokenService.selectToken(token);
+        InfoDTO infoDTO = infoService.selectInfoByKey("system_super_admin_uuid");
+        if (tokenDTO.getUserUuid().equals(infoDTO.getIvalue())) {
+            articleService.deleteArticle(aid);
+            return ResultUtil.success("删除成功");
+        }
+        throw new BusinessException("无权限", ErrorCode.BODY_ERROR);
     }
 }
