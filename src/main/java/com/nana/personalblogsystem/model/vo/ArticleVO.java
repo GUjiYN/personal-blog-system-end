@@ -33,7 +33,7 @@ public class ArticleVO {
     public String title;
 
     @NotBlank(message = "文章内容不能为空")
-    public String desc;
+    public String description;
 
     @NotNull(message = "文章标签不能为空")
     public List<String> tags;

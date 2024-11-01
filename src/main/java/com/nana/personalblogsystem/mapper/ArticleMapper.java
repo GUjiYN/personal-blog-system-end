@@ -1,7 +1,11 @@
 package com.nana.personalblogsystem.mapper;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.nana.personalblogsystem.model.CustomPage;
 import com.nana.personalblogsystem.model.entity.ArticleDO;
 import org.apache.ibatis.annotations.*;
+
+import java.util.List;
 
 /**
  * 文章映射器
@@ -12,6 +16,17 @@ import org.apache.ibatis.annotations.*;
  */
 @Mapper
 public interface ArticleMapper {
+    /**
+     *获取文章列表
+     * @return
+     */
+    @Select("SELECT * FROM na_article ORDER BY created_at DESC LIMIT #{size} OFFSET #{offset}")
+    List<ArticleDO> getArticleList(@Param("offset") int offset, @Param("size") int size);
+
+    // 获取文章总数
+    @Select("SELECT COUNT(*) FROM na_article")
+    long countArticles();
+
 
     /**
      * 检验文章是否重复

@@ -36,7 +36,7 @@ public class ArticleDTO {
     /**
      * 内容
      */
-    private String desc;
+    private String description;
     /**
      *图片
      */

@@ -1,7 +1,10 @@
 package com.nana.personalblogsystem.controller;
-
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.nana.personalblogsystem.model.CustomPage;
+import com.nana.personalblogsystem.model.dto.ArticleDTO;
 import com.nana.personalblogsystem.model.dto.InfoDTO;
 import com.nana.personalblogsystem.model.dto.TokenDTO;
+import com.nana.personalblogsystem.model.entity.ArticleDO;
 import com.nana.personalblogsystem.model.entity.TokenDO;
 import com.nana.personalblogsystem.model.vo.ArticleVO;
 import com.nana.personalblogsystem.model.vo.AuthRegisterVO;
@@ -9,6 +12,7 @@ import com.nana.personalblogsystem.service.ArticleService;
 import com.nana.personalblogsystem.service.AuthService;
 import com.nana.personalblogsystem.service.InfoService;
 import com.nana.personalblogsystem.service.TokenService;
+import com.nana.personalblogsystem.util.CopyUtil;
 import com.xlf.utility.BaseResponse;
 import com.xlf.utility.ErrorCode;
 import com.xlf.utility.ResultUtil;
@@ -16,7 +20,6 @@ import com.xlf.utility.exception.BusinessException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.annotations.Delete;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -39,11 +42,27 @@ public class ArticleController {
     private final TokenService tokenService;
     private final InfoService infoService;
 
+
     /**
-     * 显示文章
+     * 获取文章
      * <p>
-     *  用于显示文章
+     *  用于获取文章列表
      */
+    @GetMapping("/list")
+    public ResponseEntity<BaseResponse<CustomPage<ArticleDTO>>> getArticleList(
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @RequestParam(value = "size", defaultValue = "20") Integer size
+    ) {
+        // 获取分页后的文章数据
+        Page<ArticleDO> articleList = articleService.getArticleList(page, size);
+
+        // 将 ArticleDO 转换为 ArticleDTO
+        CustomPage<ArticleDTO> newArticleList = new CustomPage<>();
+        CopyUtil.pageDoCopyToDTO(articleList, newArticleList, ArticleDTO.class);
+
+        // 返回成功结果
+        return ResultUtil.success("操作成功", newArticleList);
+    }
 
 
     /**

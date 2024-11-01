@@ -1,5 +1,7 @@
 package com.nana.personalblogsystem.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.nana.personalblogsystem.model.CustomPage;
 import com.nana.personalblogsystem.model.entity.ArticleDO;
 import com.nana.personalblogsystem.model.vo.ArticleVO;
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,6 +13,8 @@ import jakarta.servlet.http.HttpServletRequest;
  */
 
 public interface ArticleService {
+
+    Page<ArticleDO> getArticleList(Integer page, Integer size);
 
     void createArticle(ArticleVO articleVO, HttpServletRequest request);
 
