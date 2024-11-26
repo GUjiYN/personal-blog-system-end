@@ -24,8 +24,9 @@ public class CommentVO {
     public String aid;
 
     @NotBlank(message = "评论者名称不能为空")
-    @Pattern(regexp = "^[a-zA-Z0-9-_]{4,48}$", message = "创建名字格式不正确")
+    @Pattern(regexp = "^[\\u4e00-\\u9fa5a-zA-Z0-9-_]{1,48}$", message = "创建名字格式不正确")
     public String cname;
+
 
     @Email(message = "邮箱格式不正确")
     public String email;

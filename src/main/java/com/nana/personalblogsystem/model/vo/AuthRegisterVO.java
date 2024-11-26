@@ -17,11 +17,13 @@ import lombok.Getter;
 @Getter
 public class AuthRegisterVO {
     @NotBlank(message = "用户名不能为空")
-    @Pattern(regexp = "^[A-Za-z0-9-_]{4,36}$", message = "用户名格式错误")
+    @Pattern(regexp = "^[A-Za-z0-9-_\\u4e00-\\u9fa5]{1,36}$", message = "用户名格式错误")
     private String username;
+
     @NotBlank(message = "邮箱不能为空")
     @Email(message = "邮箱格式错误")
     private String email;
+
     @NotBlank(message = "密码不能为空")
     private String password;
 }

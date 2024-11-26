@@ -29,7 +29,7 @@ import java.util.List;
 public class ArticleVO {
 
     @NotBlank(message = "文章标题不能为空")
-    @Pattern(regexp = "^[\\p{L}0-9\\-\\_\\#\\*\\[\\]\\(\\)\\+\\.\\s]{4,48}$", message = "创建名字格式不正确")
+    @Pattern(regexp = "^[\\p{L}0-9\\-\\_\\#\\*\\[\\]\\(\\)\\+\\.\\s]{1,48}$", message = "创建名字格式不正确")
     public String title;
 
 
