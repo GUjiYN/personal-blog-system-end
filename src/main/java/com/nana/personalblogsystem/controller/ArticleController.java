@@ -157,9 +157,9 @@ public class ArticleController {
      * <p>
      * 用于删除文章
      */
-    @DeleteMapping("/delete")
+    @DeleteMapping("/delete/{aid}")
     public ResponseEntity<BaseResponse<Void>> deleteArticle(
-            @RequestParam("aid") String aid,
+            @PathVariable("aid") String aid,
             HttpServletRequest request
     ){
         if(aid.isBlank()){
