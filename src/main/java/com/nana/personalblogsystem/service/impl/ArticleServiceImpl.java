@@ -27,7 +27,9 @@ import org.springframework.data.relational.core.sql.In;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 文章逻辑
@@ -124,7 +126,6 @@ public class ArticleServiceImpl implements ArticleService {
         });
         articleMapper.createArticle(newArticle);
     }
-
 
     @Override
     public void updateArticle(ArticleVO articleVO, String aid) {

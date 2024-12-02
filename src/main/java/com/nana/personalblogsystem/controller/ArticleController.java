@@ -133,10 +133,10 @@ public class ArticleController {
      * <p>
      * 用于更新文章
      */
-    @PutMapping("/update")
+    @PutMapping("/update/{aid}")
     public ResponseEntity<BaseResponse<Void>> updateArticle(
             @RequestBody @Validated ArticleVO articleVO,
-            @RequestParam("aid") String aid,
+            @PathVariable String aid,
             HttpServletRequest request
     ){
         if (aid.isBlank()) {
