@@ -1,6 +1,7 @@
 package com.nana.personalblogsystem.service;
 
 import com.nana.personalblogsystem.model.dto.UserDTO;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * @version v1.0.0
@@ -12,4 +13,5 @@ import com.nana.personalblogsystem.model.dto.UserDTO;
 public interface UserService {
 
     UserDTO getUserByUuid(String userUuid);
+    UserDTO getUserByToken(HttpServletRequest request);
 }

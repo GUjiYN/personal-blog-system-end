@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.regex.Pattern;
 
 /**
@@ -76,5 +77,33 @@ public class AuthServiceImpl implements AuthService {
         // 返回用户信息并附加角色
         getUser.setRole(role);
         return getUser;
+    }
+
+
+    @Override
+    public void checkUserAndPassword(String userUuid, String password, HttpServletRequest request) {
+        UserDO getUserDO = userMapper.getUserByUuid(userUuid);
+        if (getUserDO == null) {
+            throw new UserAuthenticationException(UserAuthenticationException.ErrorType.USER_NOT_EXIST, request);
+        }
+        if (!PasswordUtil.verify(password, getUserDO.getPassword())) {
+            throw new UserAuthenticationException(UserAuthenticationException.ErrorType.WRONG_PASSWORD, request);
+        }
+    }
+
+
+    @Override
+    public void changePassword(String uuid, String password) {
+        UserDO userDO = userMapper.getUserByUuid(uuid);
+        if (userDO == null) {
+            throw new BusinessException("用户不存在", ErrorCode.NOT_EXIST);
+        } else {
+            userDO
+                    .setPassword(password)
+                    .setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+            userMapper.changePassword(uuid, password);
+        }
+
+
     }
 }

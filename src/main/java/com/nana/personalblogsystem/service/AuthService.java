@@ -37,4 +37,8 @@ public interface AuthService {
      */
     UserDO login(String user, String password, HttpServletRequest request);
 
+    void checkUserAndPassword(String userUuid, String password, HttpServletRequest request);
+
+    void changePassword(String uuid, String password);
+
 }

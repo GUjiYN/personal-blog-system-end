@@ -3,6 +3,7 @@ package com.nana.personalblogsystem.controller;
 import com.nana.personalblogsystem.model.dto.AuthUserDTO;
 import com.nana.personalblogsystem.model.dto.UserDTO;
 import com.nana.personalblogsystem.model.entity.UserDO;
+import com.nana.personalblogsystem.model.vo.AuthChangePasswordVO;
 import com.nana.personalblogsystem.model.vo.AuthLoginVO;
 import com.nana.personalblogsystem.model.vo.AuthRegisterVO;
 import com.nana.personalblogsystem.service.AuthService;
@@ -91,6 +92,24 @@ public class AuthController {
                 .setUser(userDTO)
                 .setToken(getToken);
         return ResultUtil.success("登录成功", authUserDTO);
+    }
+
+    /**
+     * 修改密码
+     * <p>
+     * 该方法用于修改密码。
+     *
+     * @return {@link Void} 空
+     */
+    @PutMapping("/change/password")
+    public ResponseEntity<BaseResponse<Void>> changePassword(
+            @Validated @RequestBody AuthChangePasswordVO authChangePasswordVO,
+            HttpServletRequest request
+    ) {
+        UserDTO getUserDTO = userService.getUserByToken(request);
+        authService.checkUserAndPassword(getUserDTO.getUuid(), authChangePasswordVO.getOldPassword(), request);
+        authService.changePassword(getUserDTO.getUuid(), authChangePasswordVO.getNewPassword());
+        return ResultUtil.success("修改密码成功");
     }
 
 
