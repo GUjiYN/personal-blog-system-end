@@ -84,12 +84,20 @@ public class initialize {
         log.info("[INIT] 检查默认信息表信息...");
         if (prepare.initGetGlobalVariable("system_super_admin_uuid") == null) {
             String infoValueUuid = UuidUtil.generateUuidNoDash();
-            UserDO userDO = new UserDO();
-            userDO.setUuid(infoValueUuid);
-            userDO.setEmail("admin@admin.com");
-            userDO.setPassword(PasswordUtil.encrypt("123456"));
-            userDO.setUsername("admin");
-            userMapper.createUser(userDO);
+            // 先检查邮箱是否已存在
+            UserDO existingUser = userMapper.getUserByEmail("admin@admin.com");
+            if (existingUser == null) {
+                UserDO userDO = new UserDO();
+                userDO.setUuid(infoValueUuid);
+                userDO.setEmail("admin@admin.com");
+                userDO.setPassword(PasswordUtil.encrypt("123456"));
+                userDO.setUsername("admin");
+                userMapper.createUser(userDO);
+            } else {
+                // 邮箱已存在，使用已存在用户的UUID
+                infoValueUuid = existingUser.getUuid();
+                log.info("[INIT] 检测到管理员邮箱已存在，使用已存在的用户UUID: {}", infoValueUuid);
+            }
             prepare.checkInfoTableFields("system_super_admin_uuid", infoValueUuid);
             SystemConstant.superAdminUUID = infoValueUuid;
         } else {
